@@ -1,0 +1,18 @@
+# Core dependencies for OCR Processor
+
+# HTTP client for async API calls
+aiohttp>=3.8.0,<4.0.0
+
+# Config file parsing
+configparser>=5.0.0
+
+# Optional: For advanced use cases
+python-dotenv>=0.19.0  # If you want to use .env files instead of config.txt
+
+# Development dependencies (optional)
+# Uncomment to include in your development environment
+# pytest>=6.0
+# pytest-asyncio>=0.18.0
+# pytest-cov>=3.0.0
+# black>=22.0.0
+# flake8>=4.0.0

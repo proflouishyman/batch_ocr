@@ -1,0 +1,195 @@
+# ============================================
+# OCR PROCESSOR CONFIGURATION
+# Copy this to config.txt and fill in your values
+# ============================================
+
+# API Configuration
+# Get your API key from https://platform.openai.com/account/api-keys
+OPENAI_API_KEY=sk-your-api-key-here
+
+# OpenAI API endpoint
+API_BASE_URL=https://api.openai.com/v1
+
+# Model to use (gpt-5, gpt-5-mini, gpt-5-nano)
+# gpt-5: Full model, best quality, higher cost
+# gpt-5-mini: Good balance of quality and cost (recommended)
+# gpt-5-nano: Fastest and cheapest
+MODEL=gpt-5-mini
+
+# API request timeout in seconds
+API_TIMEOUT_SECONDS=60
+
+# ============================================
+# IMAGE PROCESSING
+# ============================================
+
+# Path to folder containing images to process
+# Supports: .pdf, .png, .jpg, .jpeg, .tiff (and more)
+INPUT_FOLDER=/path/to/your/images
+
+# Path to output folder for JSON results
+# If same as INPUT_FOLDER, .json files are placed alongside images
+OUTPUT_FOLDER=/path/to/your/images
+
+# File extensions to process (comma-separated, lowercase)
+IMAGE_EXTENSIONS=.pdf,.png,.jpg,.jpeg,.tiff
+
+# ============================================
+# BATCH PROCESSING & RATE LIMITING
+# ============================================
+
+# Maximum images to process concurrently in a batch
+# Larger = faster but higher API load
+# Recommended: 10-25 (default: 25)
+BATCH_SIZE=25
+
+# Maximum concurrent API requests
+# Should match or exceed BATCH_SIZE
+# Recommended: 20-30 (default: 25)
+MAX_CONCURRENT_REQUESTS=25
+
+# How often to poll API for task completion (seconds)
+# Lower = faster updates but more API calls
+# Recommended: 1-3 (default: 2)
+POLL_INTERVAL_SECONDS=2
+
+# ============================================
+# ERROR HANDLING & RETRIES
+# ============================================
+
+# Maximum retry attempts per image before marking as ERROR
+# Recommended: 2-5 (default: 3)
+MAX_RETRIES=3
+
+# Exponential backoff multiplier for retries
+# Retry 1: immediate
+# Retry 2: wait 2^0 * multiplier seconds
+# Retry 3: wait 2^1 * multiplier seconds
+# Recommended: 1.5-3.0 (default: 2.0)
+BACKOFF_MULTIPLIER=2.0
+
+# ============================================
+# OCR & NLP PROMPTS
+# These control what the API extracts from documents
+# ============================================
+
+# System prompt - sets the assistant's role
+SYSTEM_PROMPT=You are an expert OCR and NLP specialist. Process the provided document image with extreme precision and accuracy. Extract text, recognize entities, and categorize the document. Return ONLY valid JSON, nothing else.
+
+# User prompt template - what to extract
+# This should ask for: raw_ocr, corrected_ocr, ner, and categories
+# The prompt should explicitly request JSON format
+USER_PROMPT_TEMPLATE=Extract and process this OCR document with the following requirements:
+
+1. Extract RAW OCR: Exactly as the OCR engine reads it (preserve all text)
+2. Extract CORRECTED OCR: Grammatically corrected, cleaned version
+3. Perform NER (Named Entity Recognition): Extract all people, organizations, locations, dates, money amounts, percentages, facilities, products, and events
+4. Categorize: Identify document type, confidence score, language, table/image presence, page count, and quality score
+
+Return ONLY valid JSON with this exact structure:
+{
+  "raw_ocr": "verbatim OCR text",
+  "corrected_ocr": "corrected and cleaned text",
+  "ner": {
+    "PERSON": ["names of people"],
+    "ORG": ["organization names"],
+    "GPE": ["geographic locations"],
+    "DATE": ["dates found"],
+    "MONEY": ["monetary amounts"],
+    "PERCENT": ["percentages"],
+    "FACILITY": ["facilities"],
+    "PRODUCT": ["products"],
+    "EVENT": ["events"]
+  },
+  "categories": {
+    "document_type": "type of document",
+    "confidence": 0.85,
+    "language": "en",
+    "has_tables": false,
+    "has_images": false,
+    "page_count": 1,
+    "quality_score": 90
+  }
+}
+
+# ============================================
+# LOGGING & OUTPUT
+# ============================================
+
+# Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+# Recommended: INFO (default)
+LOG_LEVEL=INFO
+
+# Log file name (created in current directory)
+LOG_FILE=ocr_processor.log
+
+# Show detailed progress output to console
+# true = verbose progress bars and stats, false = minimal output
+VERBOSE_PROGRESS=true
+
+# ============================================
+# STATE & PERSISTENCE
+# ============================================
+
+# CSV file tracking processed images
+# Prevents re-processing of completed files
+# Reset by deleting this file
+STATE_FILE=processed_files.csv
+
+# JSON file for detailed error logs
+ERROR_LOG_FILE=error_log.json
+
+# Automatically resume from last saved state on startup
+AUTO_RESUME=true
+
+# ============================================
+# COST TRACKING
+# ============================================
+
+# Enable cost tracking and budget monitoring
+TRACK_COSTS=true
+
+# Estimated cost per 1,000 input tokens (adjust based on your pricing)
+# Check https://openai.com/pricing for current rates
+# Example: gpt-5-mini input is ~$0.003 per 1k tokens
+ESTIMATED_INPUT_COST_PER_1K_TOKENS=0.003
+
+# Estimated cost per 1,000 output tokens
+# Example: gpt-5-mini output is ~$0.006 per 1k tokens
+ESTIMATED_OUTPUT_COST_PER_1K_TOKENS=0.006
+
+# ============================================
+# PERFORMANCE TIPS
+# ============================================
+
+# For 1,000 images: BATCH_SIZE=25 is optimal
+# For 10,000+ images: Consider BATCH_SIZE=50 (higher throughput)
+# For testing: BATCH_SIZE=5 (quicker feedback)
+
+# For cost-conscious processing: Use gpt-5-nano (fastest/cheapest)
+# For quality: Use gpt-5 (most advanced)
+# For balance: Use gpt-5-mini (recommended default)
+
+# Adjust MAX_RETRIES based on reliability needs:
+# - 1-2: Fast but less reliable, for clean documents
+# - 3-5: Good balance (recommended)
+# - 5+: Maximum reliability, for difficult documents
+
+# ============================================
+# EXAMPLE WORKFLOWS
+# ============================================
+
+# Workflow 1: Fast Processing (1,000 invoices)
+# BATCH_SIZE=25
+# MODEL=gpt-5-mini
+# MAX_RETRIES=2
+
+# Workflow 2: High Quality (Complex contracts)
+# BATCH_SIZE=10
+# MODEL=gpt-5
+# MAX_RETRIES=5
+
+# Workflow 3: Budget Conscious (Large batch)
+# BATCH_SIZE=50
+# MODEL=gpt-5-nano
+# MAX_RETRIES=2

@@ -103,7 +103,18 @@ class ConfigLoader:
             )
         
         self.parser = configparser.ConfigParser()
-        self.parser.read(self.config_path)
+        self.parser.optionxform = str
+
+        with self.config_path.open("r", encoding="utf-8") as config_file:
+            contents = config_file.read()
+
+        stripped = contents.lstrip()
+        if not stripped:
+            contents = "[DEFAULT]\n"
+        elif not stripped.startswith("["):
+            contents = "[DEFAULT]\n" + contents
+
+        self.parser.read_string(contents)
     
     def load(self) -> Config:
         """
@@ -253,17 +264,17 @@ class ConfigLoader:
         path = Path(path_str).expanduser().resolve()
         return path
 
+    def _load_api_key(self) -> str:
+        """Load API key from ../API_KEY.txt"""
+        api_key_path = Path("../API_KEY.txt").expanduser().resolve()
+        with open(api_key_path, "r", encoding="utf-8") as f:
+            api_key = f.read().strip()
+            if not api_key.startswith("sk-"):
+                raise ValueError("API key must start with 'sk-'")
+            return api_key
+
 
 def load_config(config_path: Optional[str] = None) -> Config:
     """Convenience function to load config"""
     loader = ConfigLoader(config_path)
     return loader.load()
-
-def _load_api_key(self) -> str:
-    """Load API key from ../API_KEY.txt"""
-    api_key_path = Path("../API_KEY.txt").expanduser().resolve()
-    with open(api_key_path, "r", encoding="utf-8") as f:
-        api_key = f.read().strip()
-        if not api_key.startswith("sk-"):
-            raise ValueError("API key must start with 'sk-'")
-        return api_key

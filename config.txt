@@ -5,13 +5,7 @@
 
 # API Configuration
 
-**Create .gitignore** - Add:
-```
-API_KEY.txt
-../API_KEY.txt
-processed_files.csv
-error_log.json
-ocr_processor.log
+
 
 # OpenAI API endpoint
 API_BASE_URL=https://api.openai.com/v1
@@ -31,11 +25,11 @@ API_TIMEOUT_SECONDS=60
 
 # Path to folder containing images to process
 # Supports: .pdf, .png, .jpg, .jpeg, .tiff (and more)
-INPUT_FOLDER=/path/to/your/images
+INPUT_FOLDER='../sample_images'
 
 # Path to output folder for JSON results
 # If same as INPUT_FOLDER, .json files are placed alongside images
-OUTPUT_FOLDER=/path/to/your/images
+OUTPUT_FOLDER='../sample_images'
 
 # File extensions to process (comma-separated, lowercase)
 IMAGE_EXTENSIONS=.pdf,.png,.jpg,.jpeg,.tiff

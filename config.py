@@ -117,7 +117,7 @@ class ConfigLoader:
         """
         
         # API Configuration
-        openai_api_key = self._get_required("OPENAI_API_KEY")
+        openai_api_key = self._load_api_key()
         if not openai_api_key.startswith("sk-"):
             raise ValueError("OPENAI_API_KEY must start with 'sk-'")
         
@@ -258,3 +258,12 @@ def load_config(config_path: Optional[str] = None) -> Config:
     """Convenience function to load config"""
     loader = ConfigLoader(config_path)
     return loader.load()
+
+def _load_api_key(self) -> str:
+    """Load API key from ../API_KEY.txt"""
+    api_key_path = Path("../API_KEY.txt").expanduser().resolve()
+    with open(api_key_path, "r", encoding="utf-8") as f:
+        api_key = f.read().strip()
+        if not api_key.startswith("sk-"):
+            raise ValueError("API key must start with 'sk-'")
+        return api_key

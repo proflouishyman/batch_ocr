@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+*.pyo
+payload_dumps/
+ocr_processor.log
+processed_files.csv
+error_log.json
+API_KEY.txt
+../API_KEY.txt

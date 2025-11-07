@@ -235,7 +235,8 @@ class ErrorLogger:
         error_message: str,
         attempt: int = 1,
         request_id: str = "",
-        can_retry: bool = True
+        can_retry: bool = True,
+        payload_path: str = ""
     ):
         """Log an error"""
         error_entry = {
@@ -245,7 +246,8 @@ class ErrorLogger:
             "attempt": attempt,
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "request_id": request_id,
-            "can_retry": can_retry
+            "can_retry": can_retry,
+            "payload_path": payload_path
         }
         
         self.errors.append(error_entry)

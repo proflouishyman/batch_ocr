@@ -135,6 +135,27 @@ class OCRProcessor:
         
         return results
 
+    async def _heartbeat_loop(self, batch_num: int, total_batches: int, interval: int = 10):
+        """Background heartbeat logger to show periodic status while a batch is running."""
+        try:
+            while True:
+                if self.logger.progress:
+                    p = self.logger.progress
+                    msg = (
+                        f"Waiting: Processing batch {batch_num}/{total_batches} - "
+                        f"{p.processed}/{p.total_files} processed | "
+                        f"Elapsed: {p.get_elapsed_time()} | "
+                        f"Est. Remaining: {p.get_remaining_time()}"
+                    )
+                else:
+                    msg = f"Heartbeat: Processing batch {batch_num}/{total_batches}"
+
+                self.logger.info(msg)
+                await asyncio.sleep(interval)
+        except asyncio.CancelledError:
+            # Normal cancellation when the batch finishes
+            return
+
     def _dump_raw_payload(
         self,
         filename: str,
@@ -184,6 +205,9 @@ class OCRProcessor:
                 self.logger.error(f"Failed to encode {filename}: {e}")
                 self.state_manager.mark_error(filename, f"Encoding failed: {e}")
                 self.error_logger.log_error(filename, "encoding_error", str(e), can_retry=False)
+                # update progress as failed (if tracker initialized)
+                if self.logger.progress:
+                    self.logger.progress.update(success=False)
                 return {"success": False}
             
             # Mark as pending
@@ -227,6 +251,10 @@ class OCRProcessor:
                     payload_path=str(payload_path) if payload_path else ""
                 )
 
+                # update progress as failed (if tracker initialized)
+                if self.logger.progress:
+                    self.logger.progress.update(success=False)
+
                 return {"success": False}
             
             # Validate response
@@ -245,7 +273,10 @@ class OCRProcessor:
                     attempt=error_count, request_id=response.request_id or "",
                     can_retry=error_count < self.config.max_retries
                 )
-                
+                # update progress as failed (if tracker initialized)
+                if self.logger.progress:
+                    self.logger.progress.update(success=False)
+
                 return {"success": False}
             
             # Write output JSON
@@ -289,6 +320,14 @@ class OCRProcessor:
                     pass
                 
                 self.logger.info(f"✓ Processed: {filename}")
+                # update progress as success (if tracker initialized)
+                if self.logger.progress:
+                    self.logger.progress.update(
+                        success=True,
+                        input_tokens=response.input_tokens,
+                        output_tokens=response.output_tokens,
+                        cost=cost
+                    )
                 
                 return {
                     "success": True,
@@ -303,11 +342,15 @@ class OCRProcessor:
                 self.error_logger.log_error(
                     filename, "write_error", str(e), can_retry=False
                 )
+                if self.logger.progress:
+                    self.logger.progress.update(success=False)
                 return {"success": False}
         
         except Exception as e:
             self.logger.error(f"Unexpected error processing {filename}: {e}")
             self.state_manager.mark_error(filename, str(e))
+            if self.logger.progress:
+                self.logger.progress.update(success=False)
             return {"success": False}
     
     async def run(self, mode: str):
@@ -354,21 +397,21 @@ class OCRProcessor:
             
             self.logger.info(f"Processing batch {batch_num + 1}/{total_batches}")
             
+            # Start heartbeat task while the batch runs
+            heartbeat_task = asyncio.create_task(
+                self._heartbeat_loop(batch_num + 1, total_batches, interval=getattr(self.config, "heartbeat_interval", 10))
+            )
+
             # Process batch
             batch_results = await self.process_batch(batch)
-            
-            # Update progress
-            if self.logger.progress:
-                for _ in range(batch_results["processed"]):
-                    self.logger.progress.update(
-                        success=True,
-                        input_tokens=batch_results.get("total_input_tokens", 0) // max(1, batch_results["processed"]),
-                        output_tokens=batch_results.get("total_output_tokens", 0) // max(1, batch_results["processed"]),
-                        cost=batch_results.get("total_cost", 0) / max(1, batch_results["processed"])
-                    )
-                for _ in range(batch_results["failed"]):
-                    self.logger.progress.update(success=False)
-            
+
+            # Stop heartbeat
+            heartbeat_task.cancel()
+            try:
+                await heartbeat_task
+            except asyncio.CancelledError:
+                pass
+
             # Print progress update
             self.logger.print_progress_update(
                 batch_num + 1,

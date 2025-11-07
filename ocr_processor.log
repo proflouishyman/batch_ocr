@@ -46,3 +46,95 @@ Error Summary: {'bad_request': 5, 'invalid_json': 10}
 2025-11-07 09:25:16 - ocr_processor - INFO - ✓ Processed: image00146.jpg
 2025-11-07 09:25:16 - ocr_processor - INFO - 
 Error Summary: {'bad_request': 5, 'invalid_json': 10}
+2025-11-07 09:35:56 - ocr_processor - INFO - Discovering images...
+2025-11-07 09:35:56 - ocr_processor - INFO - Found 5 images
+2025-11-07 09:35:56 - ocr_processor - INFO - Processing 5 images (reprocess_all)
+2025-11-07 09:35:56 - ocr_processor - INFO - Starting processing of 5 files
+2025-11-07 09:35:56 - ocr_processor - INFO - Processing batch 1/1
+2025-11-07 09:37:36 - ocr_processor - INFO - ✓ Processed: image00144.jpg
+2025-11-07 09:37:36 - ocr_processor - INFO - ✓ Processed: image00060.jpg
+2025-11-07 09:37:48 - ocr_processor - INFO - ✓ Processed: image00146.jpg
+2025-11-07 09:37:49 - ocr_processor - INFO - ✓ Processed: image00010.jpg
+2025-11-07 09:37:56 - ocr_processor - INFO - ✓ Processed: image00109.jpg
+2025-11-07 09:44:15 - ocr_processor - INFO - Discovering images...
+2025-11-07 09:44:15 - ocr_processor - INFO - Found 5 images
+2025-11-07 09:44:15 - ocr_processor - INFO - Processing 5 images (reprocess_all)
+2025-11-07 09:44:15 - ocr_processor - INFO - Starting processing of 5 files
+2025-11-07 09:44:15 - ocr_processor - INFO - Processing batch 1/1
+2025-11-07 09:44:15 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 0/5 processed | Elapsed: 00:00:00 | Est. Remaining: N/A
+2025-11-07 09:44:25 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 0/5 processed | Elapsed: 00:00:10 | Est. Remaining: N/A
+2025-11-07 09:44:35 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 0/5 processed | Elapsed: 00:00:20 | Est. Remaining: N/A
+2025-11-07 09:44:45 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 0/5 processed | Elapsed: 00:00:30 | Est. Remaining: N/A
+2025-11-07 09:44:55 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 0/5 processed | Elapsed: 00:00:40 | Est. Remaining: N/A
+2025-11-07 09:44:56 - ocr_processor - INFO - ✓ Processed: image00010.jpg
+2025-11-07 09:44:57 - ocr_processor - INFO - ✓ Processed: image00144.jpg
+2025-11-07 09:44:57 - ocr_processor - INFO - ✓ Processed: image00060.jpg
+2025-11-07 09:44:58 - ocr_processor - INFO - ✓ Processed: image00146.jpg
+2025-11-07 09:45:05 - ocr_processor - INFO - Heartbeat: Processing batch 1/1 - 4/5 processed | Elapsed: 00:00:50 | Est. Remaining: 00:00:12
+2025-11-07 09:45:06 - ocr_processor - INFO - ✓ Processed: image00109.jpg
+2025-11-07 09:48:23 - ocr_processor - INFO - Discovering images...
+2025-11-07 09:48:23 - ocr_processor - INFO - Found 849 images
+2025-11-07 09:48:23 - ocr_processor - INFO - Processing 849 images (reprocess_all)
+2025-11-07 09:48:23 - ocr_processor - INFO - Starting processing of 849 files
+2025-11-07 09:48:23 - ocr_processor - INFO - Processing batch 1/34
+2025-11-07 09:48:23 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 0/849 processed | Elapsed: 00:00:00 | Est. Remaining: N/A
+2025-11-07 09:48:33 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 0/849 processed | Elapsed: 00:00:10 | Est. Remaining: N/A
+2025-11-07 09:48:43 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 0/849 processed | Elapsed: 00:00:20 | Est. Remaining: N/A
+2025-11-07 09:48:53 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 0/849 processed | Elapsed: 00:00:30 | Est. Remaining: N/A
+2025-11-07 09:48:56 - ocr_processor - INFO - ✓ Processed: image00011.jpg
+2025-11-07 09:48:56 - ocr_processor - INFO - ✓ Processed: image00015.jpg
+2025-11-07 09:48:57 - ocr_processor - INFO - ✓ Processed: image00017.jpg
+2025-11-07 09:49:00 - ocr_processor - INFO - ✓ Processed: image00016.jpg
+2025-11-07 09:49:00 - ocr_processor - INFO - ✓ Processed: image00014.jpg
+2025-11-07 09:49:00 - ocr_processor - INFO - ✓ Processed: image00012.jpg
+2025-11-07 09:49:02 - ocr_processor - INFO - ✓ Processed: image00019.jpg
+2025-11-07 09:49:02 - ocr_processor - INFO - ✓ Processed: image00002.jpg
+2025-11-07 09:49:02 - ocr_processor - INFO - ✓ Processed: image00009.jpg
+2025-11-07 09:49:03 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 9/849 processed | Elapsed: 00:00:40 | Est. Remaining: 01:02:14
+2025-11-07 09:49:04 - ocr_processor - INFO - ✓ Processed: image00008.jpg
+2025-11-07 09:49:06 - ocr_processor - INFO - ✓ Processed: image00018.jpg
+2025-11-07 09:49:07 - ocr_processor - INFO - ✓ Processed: image00007.jpg
+2025-11-07 09:49:08 - ocr_processor - INFO - ✓ Processed: image00005.jpg
+2025-11-07 09:49:08 - ocr_processor - INFO - ✓ Processed: image00006.jpg
+2025-11-07 09:49:09 - ocr_processor - INFO - ✓ Processed: image00010.jpg
+2025-11-07 09:49:10 - ocr_processor - INFO - ✓ Processed: image00024.jpg
+2025-11-07 09:49:10 - ocr_processor - INFO - ✓ Processed: image00023.jpg
+2025-11-07 09:49:11 - ocr_processor - INFO - ✓ Processed: image00022.jpg
+2025-11-07 09:49:13 - ocr_processor - INFO - ✓ Processed: image00021.jpg
+2025-11-07 09:49:13 - ocr_processor - INFO - Waiting: Processing batch 1/34 - 19/849 processed | Elapsed: 00:00:50 | Est. Remaining: 00:36:24
+2025-11-07 09:49:13 - ocr_processor - INFO - ✓ Processed: image00013.jpg
+2025-11-07 09:49:14 - ocr_processor - INFO - ✓ Processed: image00026.jpg
+2025-11-07 09:49:14 - ocr_processor - INFO - ✓ Processed: image00025.jpg
+2025-11-07 09:49:15 - ocr_processor - INFO - ✓ Processed: image00020.jpg
+2025-11-07 09:49:15 - ocr_processor - INFO - ✓ Processed: image00004.jpg
+2025-11-07 09:49:20 - ocr_processor - INFO - ✓ Processed: image00003.jpg
+2025-11-07 09:49:20 - ocr_processor - INFO - Processing batch 2/34
+2025-11-07 09:49:20 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 25/849 processed | Elapsed: 00:00:57 | Est. Remaining: 00:31:25
+2025-11-07 09:49:30 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 25/849 processed | Elapsed: 00:01:07 | Est. Remaining: 00:36:55
+2025-11-07 09:49:40 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 25/849 processed | Elapsed: 00:01:17 | Est. Remaining: 00:42:24
+2025-11-07 09:49:50 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 25/849 processed | Elapsed: 00:01:27 | Est. Remaining: 00:47:54
+2025-11-07 09:50:00 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 25/849 processed | Elapsed: 00:01:37 | Est. Remaining: 00:53:24
+2025-11-07 09:50:01 - ocr_processor - WARNING - Validation failed for image00051.jpg (attempt 1): Missing required field: raw_ocr; Missing required field: corrected_ocr; Missing required field: ner
+2025-11-07 09:50:06 - ocr_processor - INFO - ✓ Processed: image00040.jpg
+2025-11-07 09:50:06 - ocr_processor - WARNING - API error for image00035.jpg (attempt 1): HTTP 502: <html>
+<head><title>502 Bad Gateway</title></head>
+<body>
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>cloudflare</center>
+</body>
+</html>
+ | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00035_attempt1_http_error_20251107T145006375880Z.txt
+2025-11-07 09:50:08 - ocr_processor - INFO - ✓ Processed: image00037.jpg
+2025-11-07 09:50:08 - ocr_processor - INFO - ✓ Processed: image00038.jpg
+2025-11-07 09:50:08 - ocr_processor - INFO - ✓ Processed: image00032.jpg
+2025-11-07 09:50:09 - ocr_processor - INFO - ✓ Processed: image00050.jpg
+2025-11-07 09:50:10 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 30/849 processed | Elapsed: 00:01:47 | Est. Remaining: 00:48:46
+2025-11-07 09:50:13 - ocr_processor - INFO - ✓ Processed: image00029.jpg
+2025-11-07 09:50:15 - ocr_processor - INFO - ✓ Processed: image00039.jpg
+2025-11-07 09:50:15 - ocr_processor - INFO - ✓ Processed: image00042.jpg
+2025-11-07 09:50:17 - ocr_processor - INFO - ✓ Processed: image00027.jpg
+2025-11-07 09:50:18 - ocr_processor - INFO - ✓ Processed: image00041.jpg
+2025-11-07 09:50:18 - ocr_processor - INFO - ✓ Processed: image00049.jpg
+2025-11-07 09:50:18 - ocr_processor - INFO - ✓ Processed: image00036.jpg
+2025-11-07 09:50:20 - ocr_processor - INFO - ✓ Processed: image00047.jpg
+2025-11-07 09:50:20 - ocr_processor - INFO - Waiting: Processing batch 2/34 - 38/849 processed | Elapsed: 00:01:57 | Est. Remaining: 00:41:41

@@ -1,32 +1,69 @@
-Extract and process this OCR document with the following requirements:
-
-1. Extract RAW OCR: Exactly as the OCR engine reads it (preserve all text)
-2. Extract CORRECTED OCR: Grammatically corrected, cleaned version
-3. Perform NER (Named Entity Recognition): Extract all people, organizations, locations, dates, money amounts, percentages, facilities, products, and events
-4. Categorize: Identify document type, confidence score, language, table/image presence, page count, and quality score
-
-Return ONLY valid JSON with this exact structure:
 {
   "raw_ocr": "verbatim OCR text",
   "corrected_ocr": "corrected and cleaned text",
   "ner": {
-    "PERSON": ["names of people"],
-    "ORG": ["organization names"],
-    "GPE": ["geographic locations"],
-    "DATE": ["dates found"],
-    "MONEY": ["monetary amounts"],
-    "PERCENT": ["percentages"],
-    "FACILITY": ["facilities"],
-    "PRODUCT": ["products"],
-    "EVENT": ["events"]
+    "PERSON": [],
+    "ORG": [],
+    "GPE": [],
+    "DATE": [],
+    "MONEY": [],
+    "PERCENT": [],
+    "FACILITY": [],
+    "PRODUCT": [],
+    "EVENT": []
+  },
+  "semantic_tags": {
+    "enslaved_people": [
+      {
+        "name": "",
+        "age": "",
+        "description": "",
+        "appraised_value": "",
+        "location": ""
+      }
+    ],
+    "land_assets": [
+      {
+        "tract_name": "",
+        "acreage": "",
+        "value": "",
+        "location": ""
+      }
+    ],
+    "buildings_assets": [],
+    "livestock_or_equipment": [],
+    "transactions": []
+  },
+  "quantitative_extraction": {
+    "total_appraised_value": "",
+    "total_number_of_enslaved_people": "",
+    "total_acreage": ""
+  },
+  "geo_features": {
+    "geocoded_locations": [
+      {
+        "original_text": "",
+        "normalized_location": "",
+        "coordinates": {
+          "lat": null,
+          "lon": null
+        },
+        "geocode_confidence": 0.0,
+        "geocode_source": "OpenStreetMap Nominatim"
+      }
+    ]
   },
   "categories": {
-    "document_type": "type of document",
+    "document_type": "",
     "confidence": 0.85,
     "language": "en",
     "has_tables": false,
     "has_images": false,
     "page_count": 1,
-    "quality_score": 90
+    "quality_score": 90,
+    "value_density_score": 0.0,
+    "mentions_slaves": false,
+    "mentions_land": false,
+    "georeferenced": false
   }
 }

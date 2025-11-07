@@ -25,11 +25,11 @@ API_TIMEOUT_SECONDS=60
 
 # Path to folder containing images to process
 # Supports: .pdf, .png, .jpg, .jpeg, .tiff (and more)
-INPUT_FOLDER=../sample_images/
+INPUT_FOLDER=/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2024-2025/McD Project/McD Probate
 
 # Path to output folder for JSON results
 # If same as INPUT_FOLDER, .json files are placed alongside images
-OUTPUT_FOLDER=../sample_images/
+OUTPUT_FOLDER=/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2024-2025/McD Project/McD Probate
 
 # File extensions to process (comma-separated, lowercase)
 IMAGE_EXTENSIONS=.pdf,.png,.jpg,.jpeg,.tiff

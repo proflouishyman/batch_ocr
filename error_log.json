@@ -1,1 +1,342 @@
-[]
+[
+  {
+    "filename": "image00057.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:01:19.059017Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00077.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:09:05.368873Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00081.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:11:05.893119Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00109.jpg",
+    "error_type": "http_error",
+    "error_message": "HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>cloudflare</center>\r\n</body>\r\n</html>\r\n",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:20:32.837147Z",
+    "request_id": "unknown",
+    "can_retry": true,
+    "payload_path": "/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00109_attempt1_http_error_20251107T162032835108Z.txt"
+  },
+  {
+    "filename": "image00119.jpg",
+    "error_type": "validation_failure",
+    "error_message": "ner.DATE[0] must be a string; ner.DATE[1] must be a string; ner.MONEY[0] must be a string",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:23:41.270146Z",
+    "request_id": "resp_0c9611eec98e02c600690e1ce99d50819f94afcda4d733db88",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00131.jpg",
+    "error_type": "http_error",
+    "error_message": "HTTP 500: {\n  \"error\": {\n    \"message\": \"An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please inclu",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:26:51.455164Z",
+    "request_id": "req_79d5314bad05424dbc7e7f0b741b5c54",
+    "can_retry": true,
+    "payload_path": "/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00131_attempt1_http_error_20251107T162651453538Z.txt"
+  },
+  {
+    "filename": "image00154.jpg",
+    "error_type": "http_error",
+    "error_message": "HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>cloudflare</center>\r\n</body>\r\n</html>\r\n",
+    "attempt": 1,
+    "timestamp": "2025-11-07T16:36:00.624337Z",
+    "request_id": "unknown",
+    "can_retry": true,
+    "payload_path": "/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00154_attempt1_http_error_20251107T163600622612Z.txt"
+  },
+  {
+    "filename": "image00279.jpg",
+    "error_type": "validation_failure",
+    "error_message": "raw_ocr cannot be empty; corrected_ocr cannot be empty",
+    "attempt": 1,
+    "timestamp": "2025-11-07T17:18:32.390158Z",
+    "request_id": "resp_07393fcc1ac70bc400690e29dd8bf481968688281d4429b515",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00338.jpg",
+    "error_type": "http_error",
+    "error_message": "HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>cloudflare</center>\r\n</body>\r\n</html>\r\n",
+    "attempt": 1,
+    "timestamp": "2025-11-07T17:36:09.639143Z",
+    "request_id": "unknown",
+    "can_retry": true,
+    "payload_path": "/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00338_attempt1_http_error_20251107T173609635184Z.txt"
+  },
+  {
+    "filename": "image00389.jpg",
+    "error_type": "validation_failure",
+    "error_message": "Missing required field: raw_ocr; Missing required field: corrected_ocr; Missing required field: ner",
+    "attempt": 1,
+    "timestamp": "2025-11-07T17:51:05.629045Z",
+    "request_id": "resp_0a3cbedc21a7eb3f00690e3152ea6c8191aba1fbcb63fe68c2",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00605.jpg",
+    "error_type": "validation_failure",
+    "error_message": "Missing required field: raw_ocr; Missing required field: corrected_ocr; Missing required field: ner",
+    "attempt": 1,
+    "timestamp": "2025-11-07T18:58:43.683559Z",
+    "request_id": "resp_0f72d366af6333ea00690e412ba6ac81a190dbcd63cb00263b",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00618.jpg",
+    "error_type": "validation_failure",
+    "error_message": "Missing required field: raw_ocr; Missing required field: corrected_ocr; Missing required field: ner",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:00:59.532053Z",
+    "request_id": "resp_092af41d8982647e00690e41b256c481a193510efb2e6689e6",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00642.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:10:56.631410Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00733.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:40:26.405079Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00745.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:46:30.290856Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00750.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:48:55.019787Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00752.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:49:39.299160Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00756.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:52:18.002661Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00757.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:52:48.322082Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00758.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:53:01.243811Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00759.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:55:28.158173Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00760.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:55:57.518881Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00761.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:56:10.276156Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00762.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:58:37.335564Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00763.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T19:59:06.441022Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00778.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:07:55.399263Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00781.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:09:17.095566Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00791.jpg",
+    "error_type": "http_error",
+    "error_message": "HTTP 502: <html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>cloudflare</center>\r\n</body>\r\n</html>\r\n",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:13:27.121891Z",
+    "request_id": "unknown",
+    "can_retry": true,
+    "payload_path": "/Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00791_attempt1_http_error_20251107T201327120596Z.txt"
+  },
+  {
+    "filename": "image00794.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:17:31.089133Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00795.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:17:35.152692Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00796.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:19:00.890071Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00801.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:22:40.399475Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00835.jpg",
+    "error_type": "timeout",
+    "error_message": "Request timeout",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:38:15.591968Z",
+    "request_id": "",
+    "can_retry": true,
+    "payload_path": ""
+  },
+  {
+    "filename": "image00852.jpg",
+    "error_type": "validation_failure",
+    "error_message": "raw_ocr cannot be empty; corrected_ocr cannot be empty",
+    "attempt": 1,
+    "timestamp": "2025-11-07T20:43:02.783406Z",
+    "request_id": "resp_07a586b8ec308f6300690e59c29adc8194af59cad31c429ccb",
+    "can_retry": true,
+    "payload_path": ""
+  }
+]

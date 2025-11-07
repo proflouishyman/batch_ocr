@@ -1,0 +1,8 @@
+{
+  "error": {
+    "message": "An error occurred while processing your request. You can retry your request, or contact us through our help center at help.openai.com if the error persists. Please include the request ID req_79d5314bad05424dbc7e7f0b741b5c54 in your message.",
+    "type": "server_error",
+    "param": null,
+    "code": "server_error"
+  }
+}

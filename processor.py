@@ -16,6 +16,45 @@ from api_client import OpenAIClient, encode_image_to_base64
 from validator import ResponseValidator
 from state_manager import StateManager, ErrorLogger
 from menu import MenuHandler, ProcessingMode
+import random
+import aiohttp
+
+# --- Concurrency limiter and retry helpers ---
+MAX_CONCURRENT = 3        # 2–5 depending on your API rate limit
+RETRY_LIMIT = 3
+RETRY_BACKOFF = 5         # seconds between retries
+DEFAULT_DELAY = 1.5       # baseline delay between any two API calls
+
+_sem = asyncio.Semaphore(MAX_CONCURRENT)
+
+async def with_rate_limit(coro, filename: str, logger: OCRLogger):
+    """
+    Run a coroutine under concurrency and retry limits,
+    with a small baseline delay and exponential backoff on failure.
+    """
+    for attempt in range(1, RETRY_LIMIT + 1):
+        async with _sem:
+            # Default throttle: short pause before making request
+            await asyncio.sleep(DEFAULT_DELAY + random.uniform(0, 1))
+            try:
+                result = await coro
+                # Optional: short pause after a success, too, to keep spacing stable
+                await asyncio.sleep(DEFAULT_DELAY + random.uniform(0, 1))
+                return result
+            except asyncio.TimeoutError:
+                logger.warning(f"Timeout while processing {filename} (attempt {attempt})")
+            except aiohttp.ClientError as e:
+                logger.warning(f"Client error for {filename}: {e}")
+            except Exception as e:
+                logger.warning(f"Unexpected error for {filename}: {e}")
+
+        # Exponential backoff with jitter before next retry
+        sleep_time = RETRY_BACKOFF * attempt + random.uniform(0, 2)
+        await asyncio.sleep(sleep_time)
+
+    logger.error(f"Failed permanently: {filename} after {RETRY_LIMIT} attempts")
+    return None
+
 
 
 class OCRProcessor:
@@ -213,13 +252,24 @@ class OCRProcessor:
             # Mark as pending
             self.state_manager.mark_pending(filename)
             
-            # Call API
-            self.logger.debug(f"Submitting to API: {filename}")
-            response = await self.api_client.process_image(
-                image_base64=image_base64,
-                system_prompt=self.config.system_prompt,
-                user_prompt_template=self.config.user_prompt_template
+            # Call API with concurrency control and retries
+            self.logger.debug(f"Submitting to API (rate-limited): {filename}")
+            response = await with_rate_limit(
+                self.api_client.process_image(
+                    image_base64=image_base64,
+                    system_prompt=self.config.system_prompt,
+                    user_prompt_template=self.config.user_prompt_template
+                ),
+                filename,
+                self.logger
             )
+            if response is None:
+                # exhausted retries or unrecoverable failure
+                self.state_manager.mark_error(filename, "Rate-limit/timeout exhaustion")
+                if self.logger.progress:
+                    self.logger.progress.update(success=False)
+                return {"success": False}
+
             
             # Handle API errors
             if not response.success:
@@ -352,81 +402,111 @@ class OCRProcessor:
             if self.logger.progress:
                 self.logger.progress.update(success=False)
             return {"success": False}
-    
+
     async def run(self, mode: str):
         """
-        Main processing loop
-        
-        Args:
-            mode: Processing mode (from menu)
+        Main processing loop.
+        Submits batches sequentially (every 2 seconds) but processes them asynchronously.
+        Multiple overlapping batches run concurrently.
         """
         if mode == ProcessingMode.EXIT:
             self.logger.info("Exiting...")
             return
-        
+
         self.logger.print_header("OCR Processor - Starting")
-        
+
         # Discover images
         self.logger.info("Discovering images...")
         images = self.discover_images()
         self.logger.info(f"Found {len(images)} images")
-        
-        if len(images) == 0:
+
+        if not images:
             self.logger.warning("No images found to process")
             return
-        
+
         # Filter by mode
         filtered_images = self.filter_images_by_mode(images, mode)
         self.logger.info(f"Processing {len(filtered_images)} images ({mode})")
-        
-        if len(filtered_images) == 0:
+
+        if not filtered_images:
             self.logger.info("No images to process")
             return
-        
+
         # Initialize progress tracker
         self.logger.init_progress(len(filtered_images))
-        
-        # Process in batches
+
+        # Prepare batches
         batch_size = self.config.batch_size
         total_batches = (len(filtered_images) + batch_size - 1) // batch_size
-        
-        for batch_num in range(total_batches):
-            start_idx = batch_num * batch_size
-            end_idx = min(start_idx + batch_size, len(filtered_images))
-            batch = filtered_images[start_idx:end_idx]
-            
-            self.logger.info(f"Processing batch {batch_num + 1}/{total_batches}")
-            
-            # Start heartbeat task while the batch runs
-            heartbeat_task = asyncio.create_task(
-                self._heartbeat_loop(batch_num + 1, total_batches, interval=getattr(self.config, "heartbeat_interval", 10))
+        batches = [
+            filtered_images[i:i + batch_size]
+            for i in range(0, len(filtered_images), batch_size)
+        ]
+        hb_interval = getattr(self.config, "heartbeat_interval", 10)
+
+        # Store batch task metadata: (task, batch_num, heartbeat_task, batch_images)
+        batch_tasks = []
+
+        self.logger.info(f"Starting processing of {len(filtered_images)} files")
+
+        # Submit batches sequentially with 2-second delay between submissions
+        # This allows batches to start processing while subsequent batches are still being submitted
+        for idx, batch in enumerate(batches):
+            batch_num = idx + 1
+            self.logger.info(f"Submitting batch {batch_num}/{total_batches}")
+
+            # Start heartbeat for this batch
+            hb = asyncio.create_task(
+                self._heartbeat_loop(batch_num, total_batches, interval=hb_interval)
             )
+            
+            # Start processing batch
+            task = asyncio.create_task(self.process_batch(batch))
+            batch_tasks.append((task, batch_num, hb, batch))
 
-            # Process batch
-            batch_results = await self.process_batch(batch)
+            # Wait 2 seconds before submitting next batch
+            # This staggers the submissions while allowing concurrent processing
+            if idx < len(batches) - 1:  # Don't wait after the last batch
+                await asyncio.sleep(2)
 
-            # Stop heartbeat
-            heartbeat_task.cancel()
+        # Now wait for all batches to complete
+        # They are all running concurrently at this point
+        self.logger.info(f"All {total_batches} batches submitted. Waiting for completion...")
+        
+        all_tasks = [task for task, _, _, _ in batch_tasks]
+        results = await asyncio.gather(*all_tasks, return_exceptions=True)
+
+        # Process results and cleanup
+        for idx, ((task, batch_num, hb, batch), result) in enumerate(zip(batch_tasks, results)):
+            # Cancel heartbeat for this batch
+            hb.cancel()
             try:
-                await heartbeat_task
+                await hb
             except asyncio.CancelledError:
                 pass
 
+            # Handle result
+            if isinstance(result, Exception):
+                self.logger.error(f"Batch {batch_num} raised an exception: {result}")
+                batch_results = {"failed": len(batch), "processed": 0}
+            else:
+                batch_results = result
+
             # Print progress update
             self.logger.print_progress_update(
-                batch_num + 1,
+                batch_num,
                 total_batches,
                 len(batch),
-                batch_results["failed"]
+                batch_results.get("failed", 0)
             )
-            
-            # Save state after each batch
+
+            # Save state after each batch completes
             self.state_manager.save_to_csv()
             self.error_logger.save_to_json()
-        
-        # Print summary
+
+        # Print final summary
         self.logger.print_summary()
-        
+
         # Print error summary if any
         error_summary = self.error_logger.get_error_summary()
         if error_summary:

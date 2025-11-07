@@ -5,6 +5,7 @@ Orchestrates image discovery, async processing, polling, and result persistence
 
 import asyncio
 import json
+import re
 from pathlib import Path
 from typing import List, Set, Optional, Dict, Any
 from datetime import datetime
@@ -34,6 +35,11 @@ class OCRProcessor:
             backoff_multiplier=config.backoff_multiplier,
             logger=logger
         )
+        log_path = Path(self.config.log_file).expanduser()
+        if not log_path.is_absolute():
+            log_path = Path.cwd() / log_path
+        self.payload_dump_dir = log_path.parent / "payload_dumps"
+        self.payload_dump_dir.mkdir(parents=True, exist_ok=True)
     
     def discover_images(self) -> List[Path]:
         """
@@ -128,6 +134,28 @@ class OCRProcessor:
                 results["failed"] += 1
         
         return results
+
+    def _dump_raw_payload(
+        self,
+        filename: str,
+        error_type: str,
+        attempt: int,
+        raw_payload: str
+    ) -> Optional[Path]:
+        """Write raw API payload to disk for debugging."""
+        try:
+            timestamp = datetime.utcnow().strftime("%Y%m%dT%H%M%S%fZ")
+            safe_stem = Path(filename).stem
+            error_slug = re.sub(r"[^A-Za-z0-9_-]", "_", error_type or "unknown")
+            dump_name = f"{safe_stem}_attempt{attempt}_{error_slug}_{timestamp}.txt"
+            dump_path = self.payload_dump_dir / dump_name
+            dump_path.write_text(raw_payload, encoding="utf-8", errors="replace")
+            return dump_path
+        except Exception as exc:
+            self.logger.error(
+                f"Failed to dump payload for {filename}: {exc}"
+            )
+            return None
     
     async def _process_single_image(self, image_path: Path) -> Dict[str, Any]:
         """
@@ -173,19 +201,32 @@ class OCRProcessor:
             if not response.success:
                 error_count = self.state_manager.get_file_error_count(filename) + 1
                 can_retry = error_count < self.config.max_retries
-                
-                self.logger.warning(
-                    f"API error for {filename} (attempt {error_count}): {response.error}"
-                )
+                payload_path = None
+                if response.raw_response:
+                    payload_path = self._dump_raw_payload(
+                        filename,
+                        response.error_type or "unknown",
+                        error_count,
+                        response.raw_response
+                    )
+
+                log_message = f"API error for {filename} (attempt {error_count}): {response.error}"
+                if payload_path:
+                    log_message += f" | Payload saved to {payload_path}"
+                self.logger.warning(log_message)
+                error_notes = response.error
+                if payload_path:
+                    error_notes = f"{error_notes} | payload: {payload_path}"
                 self.state_manager.mark_error(
-                    filename, response.error, response.request_id
+                    filename, error_notes, response.request_id
                 )
                 self.error_logger.log_error(
                     filename, response.error_type or "unknown", response.error,
                     attempt=error_count, request_id=response.request_id or "",
-                    can_retry=can_retry
+                    can_retry=can_retry,
+                    payload_path=str(payload_path) if payload_path else ""
                 )
-                
+
                 return {"success": False}
             
             # Validate response

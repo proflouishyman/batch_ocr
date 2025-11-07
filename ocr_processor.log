@@ -22,3 +22,15 @@ Error Summary: {'bad_request': 5}
 2025-11-06 20:11:03 - ocr_processor - WARNING - API error for image00109.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
 2025-11-06 20:11:03 - ocr_processor - INFO - 
 Error Summary: {'bad_request': 5, 'invalid_json': 5}
+2025-11-06 20:25:40 - ocr_processor - INFO - Discovering images...
+2025-11-06 20:25:40 - ocr_processor - INFO - Found 5 images
+2025-11-06 20:25:40 - ocr_processor - INFO - Processing 5 images (reprocess_all)
+2025-11-06 20:25:40 - ocr_processor - INFO - Starting processing of 5 files
+2025-11-06 20:25:40 - ocr_processor - INFO - Processing batch 1/1
+2025-11-06 20:26:06 - ocr_processor - WARNING - API error for image00109.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00109_attempt1_invalid_json_20251107T012606793396Z.txt
+2025-11-06 20:26:06 - ocr_processor - WARNING - API error for image00146.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00146_attempt1_invalid_json_20251107T012606799857Z.txt
+2025-11-06 20:26:07 - ocr_processor - WARNING - API error for image00144.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00144_attempt1_invalid_json_20251107T012607277703Z.txt
+2025-11-06 20:26:07 - ocr_processor - WARNING - API error for image00010.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00010_attempt1_invalid_json_20251107T012607484412Z.txt
+2025-11-06 20:26:08 - ocr_processor - WARNING - API error for image00060.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | Payload saved to /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/payload_dumps/image00060_attempt1_invalid_json_20251107T012608534144Z.txt
+2025-11-06 20:26:08 - ocr_processor - INFO - 
+Error Summary: {'bad_request': 5, 'invalid_json': 10}

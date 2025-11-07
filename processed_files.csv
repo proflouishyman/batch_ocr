@@ -1,0 +1,6 @@
+filename,status,timestamp,api_request_id,error_count,notes
+image00010.jpg,ERROR,2025-11-07T01:11:02.875480Z,big-data-big-labor-team,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+image00060.jpg,ERROR,2025-11-07T01:10:47.512131Z,big-data-big-labor-team,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+image00109.jpg,ERROR,2025-11-07T01:11:03.797221Z,big-data-big-labor-team,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+image00144.jpg,ERROR,2025-11-07T01:11:02.023785Z,big-data-big-labor-team,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+image00146.jpg,ERROR,2025-11-07T01:11:02.292556Z,big-data-big-labor-team,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0)

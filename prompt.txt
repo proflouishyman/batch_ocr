@@ -1,0 +1,32 @@
+Extract and process this OCR document with the following requirements:
+
+1. Extract RAW OCR: Exactly as the OCR engine reads it (preserve all text)
+2. Extract CORRECTED OCR: Grammatically corrected, cleaned version
+3. Perform NER (Named Entity Recognition): Extract all people, organizations, locations, dates, money amounts, percentages, facilities, products, and events
+4. Categorize: Identify document type, confidence score, language, table/image presence, page count, and quality score
+
+Return ONLY valid JSON with this exact structure:
+{
+  "raw_ocr": "verbatim OCR text",
+  "corrected_ocr": "corrected and cleaned text",
+  "ner": {
+    "PERSON": ["names of people"],
+    "ORG": ["organization names"],
+    "GPE": ["geographic locations"],
+    "DATE": ["dates found"],
+    "MONEY": ["monetary amounts"],
+    "PERCENT": ["percentages"],
+    "FACILITY": ["facilities"],
+    "PRODUCT": ["products"],
+    "EVENT": ["events"]
+  },
+  "categories": {
+    "document_type": "type of document",
+    "confidence": 0.85,
+    "language": "en",
+    "has_tables": false,
+    "has_images": false,
+    "page_count": 1,
+    "quality_score": 90
+  }
+}

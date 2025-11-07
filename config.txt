@@ -25,11 +25,11 @@ API_TIMEOUT_SECONDS=60
 
 # Path to folder containing images to process
 # Supports: .pdf, .png, .jpg, .jpeg, .tiff (and more)
-INPUT_FOLDER='../sample_images'
+INPUT_FOLDER=../sample_images/
 
 # Path to output folder for JSON results
 # If same as INPUT_FOLDER, .json files are placed alongside images
-OUTPUT_FOLDER='../sample_images'
+OUTPUT_FOLDER=../sample_images/
 
 # File extensions to process (comma-separated, lowercase)
 IMAGE_EXTENSIONS=.pdf,.png,.jpg,.jpeg,.tiff
@@ -79,38 +79,7 @@ SYSTEM_PROMPT=You are an expert OCR and NLP specialist. Process the provided doc
 # User prompt template - what to extract
 # This should ask for: raw_ocr, corrected_ocr, ner, and categories
 # The prompt should explicitly request JSON format
-USER_PROMPT_TEMPLATE=Extract and process this OCR document with the following requirements:
-
-1. Extract RAW OCR: Exactly as the OCR engine reads it (preserve all text)
-2. Extract CORRECTED OCR: Grammatically corrected, cleaned version
-3. Perform NER (Named Entity Recognition): Extract all people, organizations, locations, dates, money amounts, percentages, facilities, products, and events
-4. Categorize: Identify document type, confidence score, language, table/image presence, page count, and quality score
-
-Return ONLY valid JSON with this exact structure:
-{
-  "raw_ocr": "verbatim OCR text",
-  "corrected_ocr": "corrected and cleaned text",
-  "ner": {
-    "PERSON": ["names of people"],
-    "ORG": ["organization names"],
-    "GPE": ["geographic locations"],
-    "DATE": ["dates found"],
-    "MONEY": ["monetary amounts"],
-    "PERCENT": ["percentages"],
-    "FACILITY": ["facilities"],
-    "PRODUCT": ["products"],
-    "EVENT": ["events"]
-  },
-  "categories": {
-    "document_type": "type of document",
-    "confidence": 0.85,
-    "language": "en",
-    "has_tables": false,
-    "has_images": false,
-    "page_count": 1,
-    "quality_score": 90
-  }
-}
+USER_PROMPT_TEMPLATE=@prompt.txt
 
 # ============================================
 # LOGGING & OUTPUT

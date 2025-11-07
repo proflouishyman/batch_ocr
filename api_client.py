@@ -148,7 +148,7 @@ class OpenAIClient:
         payload = {
             "model": self.model,
             "messages": messages,
-            "temperature": 0.2,  # Lower temp for consistency
+            #"temperature": 0.2,  # Lower temp for consistency
             "max_completion_tokens": 2048,
             "response_format": {
                 "type": "json_object"

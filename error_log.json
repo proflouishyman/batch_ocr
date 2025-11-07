@@ -1,0 +1,92 @@
+[
+  {
+    "filename": "image00060.jpg",
+    "error_type": "bad_request",
+    "error_message": "Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:07:50.167388Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00146.jpg",
+    "error_type": "bad_request",
+    "error_message": "Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:07:51.192680Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00109.jpg",
+    "error_type": "bad_request",
+    "error_message": "Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:07:51.337056Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00144.jpg",
+    "error_type": "bad_request",
+    "error_message": "Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:07:51.358818Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00010.jpg",
+    "error_type": "bad_request",
+    "error_message": "Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:07:51.554684Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00060.jpg",
+    "error_type": "invalid_json",
+    "error_message": "Invalid JSON in response: Expecting value: line 1 column 1 (char 0)",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:10:47.512138Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00144.jpg",
+    "error_type": "invalid_json",
+    "error_message": "Invalid JSON in response: Expecting value: line 1 column 1 (char 0)",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:11:02.023810Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00146.jpg",
+    "error_type": "invalid_json",
+    "error_message": "Invalid JSON in response: Expecting value: line 1 column 1 (char 0)",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:11:02.292581Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00010.jpg",
+    "error_type": "invalid_json",
+    "error_message": "Invalid JSON in response: Expecting value: line 1 column 1 (char 0)",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:11:02.875538Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  },
+  {
+    "filename": "image00109.jpg",
+    "error_type": "invalid_json",
+    "error_message": "Invalid JSON in response: Expecting value: line 1 column 1 (char 0)",
+    "attempt": 1,
+    "timestamp": "2025-11-07T01:11:03.797241Z",
+    "request_id": "big-data-big-labor-team",
+    "can_retry": true
+  }
+]

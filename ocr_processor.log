@@ -1,0 +1,24 @@
+2025-11-06 20:07:46 - ocr_processor - INFO - Discovering images...
+2025-11-06 20:07:46 - ocr_processor - INFO - Found 5 images
+2025-11-06 20:07:46 - ocr_processor - INFO - Processing 5 images (reprocess_all)
+2025-11-06 20:07:46 - ocr_processor - INFO - Starting processing of 5 files
+2025-11-06 20:07:46 - ocr_processor - INFO - Processing batch 1/1
+2025-11-06 20:07:50 - ocr_processor - WARNING - API error for image00060.jpg (attempt 1): Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.
+2025-11-06 20:07:51 - ocr_processor - WARNING - API error for image00146.jpg (attempt 1): Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.
+2025-11-06 20:07:51 - ocr_processor - WARNING - API error for image00109.jpg (attempt 1): Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.
+2025-11-06 20:07:51 - ocr_processor - WARNING - API error for image00144.jpg (attempt 1): Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.
+2025-11-06 20:07:51 - ocr_processor - WARNING - API error for image00010.jpg (attempt 1): Bad request (400): Unsupported value: 'temperature' does not support 0.2 with this model. Only the default (1) value is supported.
+2025-11-06 20:07:51 - ocr_processor - INFO - 
+Error Summary: {'bad_request': 5}
+2025-11-06 20:10:10 - ocr_processor - INFO - Discovering images...
+2025-11-06 20:10:10 - ocr_processor - INFO - Found 5 images
+2025-11-06 20:10:10 - ocr_processor - INFO - Processing 5 images (reprocess_all)
+2025-11-06 20:10:10 - ocr_processor - INFO - Starting processing of 5 files
+2025-11-06 20:10:10 - ocr_processor - INFO - Processing batch 1/1
+2025-11-06 20:10:47 - ocr_processor - WARNING - API error for image00060.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+2025-11-06 20:11:02 - ocr_processor - WARNING - API error for image00144.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+2025-11-06 20:11:02 - ocr_processor - WARNING - API error for image00146.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+2025-11-06 20:11:02 - ocr_processor - WARNING - API error for image00010.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+2025-11-06 20:11:03 - ocr_processor - WARNING - API error for image00109.jpg (attempt 1): Invalid JSON in response: Expecting value: line 1 column 1 (char 0)
+2025-11-06 20:11:03 - ocr_processor - INFO - 
+Error Summary: {'bad_request': 5, 'invalid_json': 5}

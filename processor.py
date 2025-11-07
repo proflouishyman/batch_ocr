@@ -279,6 +279,14 @@ class OCRProcessor:
                     response.input_tokens,
                     response.output_tokens
                 )
+
+                # Clear any previously-logged errors for this file so the
+                # error summary reflects current unresolved errors only.
+                try:
+                    self.error_logger.clear_errors_for(filename)
+                except Exception:
+                    # Don't let error-clearing disrupt overall success flow
+                    pass
                 
                 self.logger.info(f"✓ Processed: {filename}")
                 

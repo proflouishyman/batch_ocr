@@ -122,38 +122,32 @@ class OpenAIClient:
     ) -> APIResponse:
         """Make single API call to OpenAI"""
         
-        # Construct message with image
-        messages = [
-            {
-                "role": "system",
-                "content": system_prompt
-            },
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": user_prompt_template
-                    },
-                    {
-                        "type": "image_url",
-                        "image_url": {
-                            "url": f"data:image/png;base64,{image_base64}",
-                            "detail": "high"
-                        }
-                    }
-                ]
-            }
-        ]
-        
+        # Construct Responses-style input (typed content blocks) per user sample.
+        # Keep the existing model value but use the /responses endpoint and
+        # the `input` list shape so it's compatible with Responses-style APIs.
+        system_input = {
+            "role": "system",
+            "content": [
+                {"type": "input_text", "text": system_prompt}
+            ]
+        }
+
+        user_input = {
+            "role": "user",
+            "content": [
+                {"type": "input_text", "text": user_prompt_template},
+                {
+                    "type": "input_image",
+                    "image_url": f"data:image/png;base64,{image_base64}"
+                }
+            ]
+        }
+
         payload = {
             "model": self.model,
-            "messages": messages,
+            "input": [system_input, user_input],
             #"temperature": 0.2,  # Lower temp for consistency
-            "max_completion_tokens": 2048,
-            "response_format": {
-                "type": "json_object"
-            }
+            # no max tokens by user request
         }
         
         headers = {
@@ -164,7 +158,7 @@ class OpenAIClient:
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
-                    f"{self.base_url}/chat/completions",
+                    f"{self.base_url}/responses",
                     json=payload,
                     headers=headers,
                     timeout=aiohttp.ClientTimeout(total=self.timeout)
@@ -195,16 +189,60 @@ class OpenAIClient:
                             )
 
                         try:
-                            # Extract response
-                            content = data["choices"][0]["message"]["content"]
-                            json_data = json.loads(content)
+                            # Responses API: prefer `output_text` if present, otherwise
+                            # build text from the `output` content blocks. Also accept
+                            # structured JSON content blocks if the model returned
+                            # a typed JSON object.
+                            json_data = None
+                            assembled_text = ""
 
-                            # Extract token counts
-                            input_tokens = data["usage"]["prompt_tokens"]
-                            output_tokens = data["usage"]["completion_tokens"]
+                            # Direct convenience field
+                            if isinstance(data.get("output_text"), str) and data.get("output_text").strip():
+                                assembled_text = data.get("output_text").strip()
 
-                            # Prefer the response payload ID when available so it
-                            # matches the identifier shown in the API dashboard.
+                            else:
+                                outputs = data.get("output", []) or []
+                                collected_parts = []
+                                for out in outputs:
+                                    for part in out.get("content", []) if isinstance(out.get("content"), list) else []:
+                                        if isinstance(part, dict):
+                                            ptype = part.get("type")
+                                            # Common text block
+                                            if ptype == "output_text" and "text" in part:
+                                                collected_parts.append(part.get("text", ""))
+                                            # Some gateways may return a typed JSON block
+                                            elif "json" in part and isinstance(part.get("json"), (dict, list)):
+                                                json_data = part.get("json")
+                                            # Fallback: if there is a 'text' key, use it
+                                            elif "text" in part:
+                                                collected_parts.append(part.get("text", ""))
+                                        elif isinstance(part, str):
+                                            collected_parts.append(part)
+
+                                assembled_text = "\n".join([p for p in collected_parts if p]).strip()
+
+                            # If we already have a structured JSON block from the response, use it.
+                            if json_data is None and assembled_text:
+                                try:
+                                    json_data = json.loads(assembled_text)
+                                except json.JSONDecodeError:
+                                    # Not JSON; fall through — caller may expect text fields
+                                    json_data = {"text": assembled_text}
+
+                            if json_data is None or (isinstance(json_data, dict) and not json_data):
+                                # No usable content returned
+                                return APIResponse(
+                                    success=False,
+                                    error="Empty or unparseable assistant output",
+                                    error_type="invalid_json",
+                                    request_id=request_id,
+                                    raw_response=response_text
+                                )
+
+                            # Extract token counts (if provided)
+                            input_tokens = data.get("usage", {}).get("prompt_tokens", 0)
+                            output_tokens = data.get("usage", {}).get("completion_tokens", 0)
+
                             request_id = data.get("id", request_id)
 
                             return APIResponse(
@@ -213,15 +251,6 @@ class OpenAIClient:
                                 input_tokens=input_tokens,
                                 output_tokens=output_tokens,
                                 request_id=request_id
-                            )
-
-                        except json.JSONDecodeError as e:
-                            return APIResponse(
-                                success=False,
-                                error=f"Invalid JSON in response: {e}",
-                                error_type="invalid_json",
-                                request_id=request_id,
-                                raw_response=response_text
                             )
 
                         except (KeyError, IndexError, TypeError) as e:

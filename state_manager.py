@@ -263,6 +263,17 @@ class ErrorLogger:
             error_type = error.get("error_type", "unknown")
             summary[error_type] = summary.get(error_type, 0) + 1
         return summary
+
+    def clear_errors_for(self, filename: str):
+        """Remove any logged errors for a specific filename (useful when a
+        file later succeeds and you want the error summary to reflect only
+        unresolved/current errors).
+        """
+        try:
+            self.errors = [e for e in self.errors if e.get("filename") != filename]
+        except Exception:
+            # Defensive: if something unexpected is in errors, fallback to no-op
+            pass
     
     def clear(self):
         """Clear all error logs"""

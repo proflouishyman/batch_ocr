@@ -1,6 +1,6 @@
 filename,status,timestamp,api_request_id,error_count,notes
-image00010.jpg,ERROR,2025-11-07T01:26:07.485988Z,req_37d5a786336045fe9a098c5d243b9261,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | payload: /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/p
-image00060.jpg,ERROR,2025-11-07T01:26:08.535717Z,req_1d24f1cba6474a48a666ba382beb5190,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | payload: /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/p
-image00109.jpg,ERROR,2025-11-07T01:26:06.795834Z,req_0bb6e5f8748e4f2c9e094867120dd2af,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | payload: /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/p
-image00144.jpg,ERROR,2025-11-07T01:26:07.279135Z,req_333398bf796b461683f2b04e1b495121,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | payload: /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/p
-image00146.jpg,ERROR,2025-11-07T01:26:06.801192Z,req_7c24ae7accbd407ea36c9292dcc57d40,1,Invalid JSON in response: Expecting value: line 1 column 1 (char 0) | payload: /Users/louishyman/Library/CloudStorage/GoogleDrive-lhyman@gmail.com/My Drive/2025-2026/Coding/batch_ocr_files/batch_ocr/p
+image00010.jpg,SUCCESS,2025-11-07T14:25:15.113762Z,resp_0091516877495cc700690e011cb6a4819da60d198951889f6f,0,Tokens: 0in/0out
+image00060.jpg,SUCCESS,2025-11-07T14:25:11.143218Z,resp_0962f88754c79a2400690e011cea4881a09655a94de80f9a59,0,Tokens: 0in/0out
+image00109.jpg,SUCCESS,2025-11-07T14:25:15.642482Z,resp_04a3d8be0a2e72fb00690e011cea8c8192b9c3f1a592cd86af,0,Tokens: 0in/0out
+image00144.jpg,SUCCESS,2025-11-07T14:25:14.512934Z,resp_0cf975600ffa81cf00690e011ca95481a2a3959b9e97242b26,0,Tokens: 0in/0out
+image00146.jpg,SUCCESS,2025-11-07T14:25:16.673084Z,resp_0f40124f60eaadfd00690e011d5a5c81a0a029986669bff436,0,Tokens: 0in/0out

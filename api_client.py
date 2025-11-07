@@ -22,6 +22,7 @@ class APIResponse:
     input_tokens: int = 0
     output_tokens: int = 0
     request_id: Optional[str] = None
+    raw_response: Optional[str] = None
 
 
 class OpenAIClient:
@@ -168,21 +169,44 @@ class OpenAIClient:
                     headers=headers,
                     timeout=aiohttp.ClientTimeout(total=self.timeout)
                 ) as resp:
-                    # Get response ID from headers
-                    request_id = resp.headers.get("openai-organization", "unknown")
-                    
+                    # Capture the server-provided request identifier if available.
+                    # According to OpenAI's public API documentation, the primary
+                    # header is `x-request-id`, with `openai-request-id` used on
+                    # some legacy gateways.  Fall back to a sentinel so downstream
+                    # logging always has a value.
+                    request_id = (
+                        resp.headers.get("x-request-id")
+                        or resp.headers.get("openai-request-id")
+                        or resp.headers.get("request-id")
+                        or "unknown"
+                    )
+                    response_text = await resp.text()
+
                     if resp.status == 200:
-                        data = await resp.json()
-                        
+                        try:
+                            data = json.loads(response_text)
+                        except json.JSONDecodeError as e:
+                            return APIResponse(
+                                success=False,
+                                error=f"Invalid JSON in response body: {e}",
+                                error_type="invalid_json",
+                                request_id=request_id,
+                                raw_response=response_text
+                            )
+
                         try:
                             # Extract response
                             content = data["choices"][0]["message"]["content"]
                             json_data = json.loads(content)
-                            
+
                             # Extract token counts
                             input_tokens = data["usage"]["prompt_tokens"]
                             output_tokens = data["usage"]["completion_tokens"]
-                            
+
+                            # Prefer the response payload ID when available so it
+                            # matches the identifier shown in the API dashboard.
+                            request_id = data.get("id", request_id)
+
                             return APIResponse(
                                 success=True,
                                 data=json_data,
@@ -190,68 +214,77 @@ class OpenAIClient:
                                 output_tokens=output_tokens,
                                 request_id=request_id
                             )
-                        
+
                         except json.JSONDecodeError as e:
                             return APIResponse(
                                 success=False,
                                 error=f"Invalid JSON in response: {e}",
                                 error_type="invalid_json",
-                                request_id=request_id
+                                request_id=request_id,
+                                raw_response=response_text
                             )
-                        
-                        except (KeyError, IndexError) as e:
+
+                        except (KeyError, IndexError, TypeError) as e:
                             return APIResponse(
                                 success=False,
                                 error=f"Unexpected response format: {e}",
                                 error_type="invalid_json",
-                                request_id=request_id
+                                request_id=request_id,
+                                raw_response=response_text
                             )
-                    
+
                     elif resp.status == 429:
                         # Rate limited
                         return APIResponse(
                             success=False,
                             error="Rate limited (429)",
                             error_type="rate_limit",
-                            request_id=request_id
+                            request_id=request_id,
+                            raw_response=response_text
                         )
-                    
+
                     elif resp.status in [408, 504]:
                         # Timeout
                         return APIResponse(
                             success=False,
                             error=f"Timeout ({resp.status})",
                             error_type="timeout",
-                            request_id=request_id
+                            request_id=request_id,
+                            raw_response=response_text
                         )
-                    
+
                     elif resp.status == 400:
                         # Bad request - don't retry
-                        error_data = await resp.json()
-                        error_msg = error_data.get("error", {}).get("message", "Unknown error")
+                        try:
+                            error_data = json.loads(response_text)
+                            error_msg = error_data.get("error", {}).get("message", "Unknown error")
+                        except json.JSONDecodeError:
+                            error_msg = response_text[:200] if response_text else "Unknown error"
                         return APIResponse(
                             success=False,
                             error=f"Bad request (400): {error_msg}",
                             error_type="bad_request",
-                            request_id=request_id
+                            request_id=request_id,
+                            raw_response=response_text
                         )
-                    
+
                     elif resp.status == 401:
                         # Authentication error
                         return APIResponse(
                             success=False,
                             error="Authentication failed (401)",
                             error_type="auth_error",
-                            request_id=request_id
+                            request_id=request_id,
+                            raw_response=response_text
                         )
-                    
+
                     else:
-                        error_data = await resp.text()
                         return APIResponse(
                             success=False,
-                            error=f"HTTP {resp.status}: {error_data[:200]}",
+                            error=f"HTTP {resp.status}: {response_text[:200]}",
                             error_type="http_error",
-                            request_id=request_id
+                            request_id=request_id,
+                            raw_response=response_text
                         )
         
         except asyncio.TimeoutError:
